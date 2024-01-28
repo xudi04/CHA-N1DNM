@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include("./forAll/head.ejs")%>
+    <style>
+        .login-form {
+            background-color: aliceblue;
+            border: 3px solid gray;
+            border-radius: 5px;
+            box-shadow: 3px 3px 6px black;
+            display: flex;
+            flex-direction: column;
+            width: 500px;
+            padding: 30px;
+        }
+
+        .login-form div {
+            padding: 30px 0px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .login-form div i {
+            background-color: black;
+            padding: 10px;
+            color: white;
+            border-radius: 50px;
+        }
+        #myForm { display: none;}
+    </style>
+<body  class="dark"  id="body1">
+    <form id="myForm"></form>
+
+    <div class="login-form">
+        <div><h1>Giriş yap veya kayd ol</h1></div>
+        <div>
+            <i id="google" class="fab fa-google"></i>
+            <i id="facebook" class="fab fa-facebook"></i>
+            <i id="github" class="fab fa-github"></i>
+        </div>
+    </div>
+
+    <!-- <%-include("./forAll/scripts.ejs")%> -->
+
+    <script>
+
+
+        const Database = firebase.database();
+
+
+        google.addEventListener("click", () => {
+
+            var provider = new firebase.auth.GoogleAuthProvider();
+
+            console.log(provider);
+
+            firebase.auth()
+                .signInWithPopup(provider)
+                .then((result) => {
+                    /** @type {firebase.auth.OAuthCredential} */
+                    var credential = result.credential;
+
+                    // This gives you a Google Access Token. You can use it to access the Google API.
+                    var token = credential.accessToken;
+                    // The signed-in user info.
+                    var user = result.user;
+
+                    Database.ref('us/'+ user.uid).set({
+                        username: user.displayName,
+                        email: user.email,
+                        followed: 0,
+                        follower: 0,
+                        liked: {},
+                        profile_URL: user.photoURL,
+                        shares: {},
+                        userId:user.uid
+                    });
+
+                    console.log(credential,token,user);
+                    setTimeout(() => {window.location.replace("/");}, 500);
+
+
+
+                }).catch((error) => {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                    // ...
+                });
+
+            // firebase.auth().signInWithRedirect(provider);
+        });
+
+
+        facebook.addEventListener("click", () => {
+            var provider = new firebase.auth.FacebookAuthProvider();
+            firebase.auth().signInWithRedirect(provider);
+        });
+
+        github.addEventListener("click", () => {
+            var provider = new firebase.auth.GithubAuthProvider();
+            firebase.auth().signInWithRedirect(provider);
+        });
+
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                setTimeout(() => {window.location.replace("/");}, 5000);
+            } else {
+                console.log("not");
+            }
+        });
+        
+    </script>
+
+</body>
+</html>

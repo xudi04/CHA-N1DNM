@@ -1,0 +1,132 @@
+:root {
+    --message-color: aliceblue;
+    --message-bg: rgba(0, 255, 255, 0.623);
+    --message-area-bg: aqua;
+    --write-area-hover-color :aquamarine;
+}
+
+body.dark {
+    --message-color: aliceblue;
+    --message-bg: lightgray;
+    --message-area-bg: gray;
+    --write-area-hover-color :aquamarine;
+}
+
+.chate {
+    position: fixed;
+    width: 100%;
+    user-select: none;
+}
+
+
+.message-list {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.message {
+    max-width: 100%;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    background-color: var(--message-bg);
+    margin: 10px 0px;
+    color: var(--message-color);
+}
+
+.message img {
+    width: 80px;
+    border-radius: 50px;
+}
+
+.message h1 {
+    display: block;
+    line-height: 80px;
+    text-align: left;
+    padding-left: 30px;
+    
+}
+
+.message-area { display: none;}
+
+.message-area.o{
+    position: absolute;
+    background-color: var(--message-area-bg);
+    max-width: 100%;
+    width: 100%;
+    height: 100vh;
+    display: block;
+}
+
+.message-area .head {
+    max-width: 100%;
+    width: 100%;
+    height: 80px;
+    font-size: 25px;
+    padding-left: 20px;
+    background-color: var(--message-color);
+    display: flex;
+}
+
+.message-area .head i {
+    padding: 20px;
+    height: 100%;
+    /* line-height: 80px; */
+}
+
+.message-area .head h1 {
+    display: block;
+    line-height: 70px;
+    text-align: center;
+    width: 100%;
+}
+
+
+.messages {
+    width: 100%;
+    height: calc(100% - 140px);
+}
+
+.write-area {
+    max-width: 100%;
+    width: 100%;
+    height: 50px;
+    background-color: var(--message-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+}
+
+.write-area i {
+    width: 10%;
+    height: 100%;
+    line-height: 50px;
+    padding: 0px 10px;
+    font-size: 24px;
+}
+
+.write-area i:hover {
+    color: var(--write-area-hover-color);
+}
+
+.write-area i:active {
+    background-color: var(--write-area-hover-color);
+    color: var(--message-color);
+}
+
+
+
+.write-area input {
+    width: 80%;
+    height: 50px;
+    margin-left: 10%;
+    font-size: 20px;
+    max-height: 50px;
+    min-height: 25px;
+    text-align: left;
+    padding: 0px 10px;
+}
